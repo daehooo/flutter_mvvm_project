@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mvvm_statemanagements/constants/my_app_constants.dart';
 import 'package:mvvm_statemanagements/constants/my_app_icons.dart';
-import 'package:mvvm_statemanagements/models/movies_model.dart';
 import 'package:mvvm_statemanagements/screens/movie_detail_screen.dart';
 import 'package:mvvm_statemanagements/service/init_getit.dart';
 import 'package:mvvm_statemanagements/service/navigation_service.dart';
@@ -9,9 +9,11 @@ import 'package:mvvm_statemanagements/widgets/movies/favorite_btn_widget.dart';
 import 'package:mvvm_statemanagements/widgets/movies/genres_list_widget.dart';
 
 class MoviesWidget extends StatelessWidget {
-  const MoviesWidget({super.key, required this.movieModel,});
+  const MoviesWidget({super.key,
+  //  required this.movieModel,
+   });
 
-  final MovieModel movieModel;
+  // final MovieModel movieModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,7 +24,7 @@ class MoviesWidget extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(12.0),
           onTap: () {
-            getIt<NavigationService>().navigate( MovieDetailsScreen(movieModel: movieModel));
+            getIt<NavigationService>().navigate( MovieDetailsScreen());
 
             },
           child: Padding(
@@ -32,13 +34,12 @@ class MoviesWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Hero(
-                    tag: movieModel.id,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12.0),
-                      child:  CachedImageWidget(
-                        imgUrl: "https://image.tmdb.org/t/p/w500/${movieModel.posterPath}",
-                      ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12.0),
+                    child:  CachedImageWidget(
+                      imgUrl: 
+                      MyAppConstants.movieImage,
+                      // "https://image.tmdb.org/t/p/w500/${movieModel.posterPath}",
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -47,7 +48,7 @@ class MoviesWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                          Text(
-                          movieModel.originalTitle,
+                          'movieModel.originalTitle',
                           style: const TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -60,11 +61,17 @@ class MoviesWidget extends StatelessWidget {
                               size: 20,
                             ),
                             const SizedBox(width: 5),
-                            Text("${movieModel.voteAverage.toStringAsFixed(1)}/10"),
+                            Text(
+                              "0.8/10"
+                              // "${movieModel.voteAverage.toStringAsFixed(1)}/10"
+                              ),
                           ],
                         ),
                         const SizedBox(height: 10),
-                        GenresListWidget(movieModel: movieModel,),
+                        GenresListWidget(
+                        //   movieModel:
+                        //  movieModel,
+                         ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,11 +83,11 @@ class MoviesWidget extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                              Text(
-                              movieModel.releaseDate,
+                              "movieModel.releaseDate",
                               style: const TextStyle(color: Colors.grey),
                             ),
                             const Spacer(),
-                            FavoriteBtnWidget(movieModel: movieModel,),
+                            FavoriteBtnWidget(),
                           ],
                         ),
                       ],

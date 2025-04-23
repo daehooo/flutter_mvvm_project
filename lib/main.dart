@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: getIt<NavigationService>().navigatorKey,
       title: 'Movies App',
       theme: MyThemeData.lightTheme,
-      home: const SplashScreen(),
+      home: const MovieScreen(),
     );
   }
 }
