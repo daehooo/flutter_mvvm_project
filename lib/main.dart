@@ -6,6 +6,7 @@ import 'package:mvvm_statemanagements/screens/movies_screen.dart';
 import 'package:mvvm_statemanagements/screens/splash_screen.dart';
 import 'package:mvvm_statemanagements/service/init_getit.dart';
 import 'package:mvvm_statemanagements/service/navigation_service.dart';
+import 'package:mvvm_statemanagements/view_models/movies_provider.dart';
 import 'package:mvvm_statemanagements/view_models/theme_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -35,6 +36,9 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<ThemeProvider>(
             create: (_) => ThemeProvider(),
+          ),
+          ChangeNotifierProvider<MoviesProvider>(
+            create: (_) => MoviesProvider(),  
           )
         ],
         child: Consumer(
@@ -44,7 +48,7 @@ class MyApp extends StatelessWidget {
               navigatorKey: getIt<NavigationService>().navigatorKey,
               title: 'Movies App',
               theme: themeProvider.themeData,
-              home: const MovieScreen(),
+              home: SplashScreen(),
             );
           },
 
