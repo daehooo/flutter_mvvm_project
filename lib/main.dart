@@ -6,6 +6,8 @@ import 'package:mvvm_statemanagements/screens/movies_screen.dart';
 import 'package:mvvm_statemanagements/screens/splash_screen.dart';
 import 'package:mvvm_statemanagements/service/init_getit.dart';
 import 'package:mvvm_statemanagements/service/navigation_service.dart';
+import 'package:mvvm_statemanagements/view_models/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 
 void main()  {
@@ -24,16 +26,29 @@ class MyApp extends StatelessWidget {
    const MyApp({super.key});
 
   // final navigationKey = NavigationService().navigatorKey;
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-      return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      navigatorKey: getIt<NavigationService>().navigatorKey,
-      title: 'Movies App',
-      theme: MyThemeData.lightTheme,
-      home: const MovieScreen(),
-    );
+      // final themeProvider = Provider.of<ThemeProvider>(context);
+
+      return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<ThemeProvider>(
+            create: (_) => ThemeProvider(),
+          )
+        ],
+        child: Consumer(
+          builder: (context, ThemeProvider themeProvider, child) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              navigatorKey: getIt<NavigationService>().navigatorKey,
+              title: 'Movies App',
+              theme: themeProvider.themeData,
+              home: const MovieScreen(),
+            );
+          },
+
+        ),
+      );
   }
 }
