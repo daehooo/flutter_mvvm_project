@@ -31,7 +31,7 @@ class SplashScreen extends StatelessWidget {
               return CircularProgressIndicator.adaptive();
             } else if (snapshot.hasError) {
               if(moviesProvider.genresList.isNotEmpty) {
-                 WidgetsBinding.instance.addPostFrameCallback((_) {
+                 WidgetsBinding.instance.addPostFrameCallback((_) { 
               getIt<NavigationService>().navigateReplace(const MovieScreen());
             }); 
               }
