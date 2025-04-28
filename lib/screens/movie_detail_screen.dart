@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
-import 'package:mvvm_statemanagements/constants/my_app_constants.dart';
 import 'package:mvvm_statemanagements/models/movies_model.dart';
 import 'package:mvvm_statemanagements/widgets/cached_image.dart';
 import 'package:mvvm_statemanagements/widgets/movies/favorite_btn_widget.dart';
 import 'package:mvvm_statemanagements/widgets/movies/genres_list_widget.dart';
+import 'package:provider/provider.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
 
@@ -17,18 +17,24 @@ class MovieDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final moviesModelProvider = Provider.of<MovieModel>(context);
+
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
       body: SafeArea(
         child: Stack(
           children: [
-            SizedBox(
-              height: size.height * 0.45,
-              width: double.infinity,
-              child:  CachedImageWidget(
-                imgUrl:                          MyAppConstants.movieImage,
-            
-                // "https://image.tmdb.org/t/p/w500/${movieModel.posterPath}",
+            Hero(
+              tag: moviesModelProvider.id,
+              child: SizedBox(
+                height: size.height * 0.45,
+                width: double.infinity,
+                child:  CachedImageWidget(
+                  imgUrl:                         
+                  //  MyAppConstants.movieImage,
+              
+                  "https://image.tmdb.org/t/p/w500/${moviesModelProvider.posterPath}",
+                ),
               ),
             ),
             SingleChildScrollView(
@@ -72,23 +78,24 @@ class MovieDetailsScreen extends StatelessWidget {
                                       size: 20,
                                     ),
                                     const SizedBox(width: 5),
-                                    Text("0.8/10"
-                                      // "${movieModel.voteAverage.toStringAsFixed(1)}/10",
+                                    Text(
+                                      // "0.8/10"
+                                      "${moviesModelProvider.voteAverage.toStringAsFixed(1)}/10",
                                     ),
                             // Text("${movieModel.voteAverage.toStringAsFixed(1)}/10"),
                                     const Spacer(),
                                      Text(
-                                      'movieModel.releaseDate'
+                                      moviesModelProvider.releaseDate
                                       ,
                                       style: TextStyle(color: Colors.grey),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(height: 10),
-                                 GenresListWidget(),
+                                 GenresListWidget(movieModel: moviesModelProvider,),
                                 const SizedBox(height: 15),
                                 Text(
-                                  'movieModel.overview',
+                                  moviesModelProvider.overview,
                                   textAlign: TextAlign.justify,
                                   style: const TextStyle(
                                     fontSize: 18.0,
@@ -108,7 +115,7 @@ class MovieDetailsScreen extends StatelessWidget {
                           ),
                           child:  Padding(
                             padding: const EdgeInsets.all(6.0),
-                            child: FavoriteBtnWidget(),
+                            child: FavoriteBtnWidget(movieModel: moviesModelProvider,),
                           ),
                         ),
                       ),

@@ -7,10 +7,10 @@ import 'package:mvvm_statemanagements/utils/genre_utils.dart';
 class GenresListWidget extends StatelessWidget {
   const GenresListWidget({super.key, 
   
-  // required this.movieModel
+  required this.movieModel
   
   });
-  // final MovieModel movieModel;
+  final MovieModel movieModel;
 
   @override
   Widget build(BuildContext context) {

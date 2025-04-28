@@ -3,6 +3,7 @@ import 'package:mvvm_statemanagements/repository/movies_repo.dart';
 import 'package:mvvm_statemanagements/screens/movies_screen.dart';
 import 'package:mvvm_statemanagements/service/init_getit.dart';
 import 'package:mvvm_statemanagements/service/navigation_service.dart';
+import 'package:mvvm_statemanagements/view_models/favorites_provider.dart';
 import 'package:mvvm_statemanagements/view_models/movies_provider.dart';
 import 'package:mvvm_statemanagements/widgets/my_error_widget.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,9 @@ class SplashScreen extends StatelessWidget {
 
     Future<void> loadInitialData(BuildContext context) async {
       await Future.microtask(() async {
+        if(!context.mounted) return;
+      await Provider.of<FavoritesProvider>(context, listen: false).loadFavorites() ; 
+
         if(!context.mounted) return;
         await Provider.of<MoviesProvider>(context, listen:  false).getMovies();
       });
@@ -36,7 +40,7 @@ class SplashScreen extends StatelessWidget {
             }); 
               }
               return 
-              Provider.of<MoviesProvider>(context).isLoading ? Center(child: CircularProgressIndicator.adaptive(),) : 
+              Provider.of<MoviesProvider>(context).isLoading ? const Center(child: CircularProgressIndicator.adaptive(),) : 
 
               MyErrorWidget(errorText: snapshot.error.toString(), retryFunction: ()async {
                 loadInitialData(context);
@@ -46,7 +50,7 @@ class SplashScreen extends StatelessWidget {
               Provider.of<MoviesProvider>(context, listen: false).getMovies(); 
               getIt<NavigationService>().navigateReplace(const MovieScreen());
             }); 
-              return SizedBox.shrink();
+              return const SizedBox.shrink();
             }
           })
 
