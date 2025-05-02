@@ -9,12 +9,12 @@ import 'package:mvvm_statemanagements/service/navigation_service.dart';
 import 'package:mvvm_statemanagements/viewmodel/theme_provider.dart';
 import 'package:mvvm_statemanagements/widgets/movies/movies_widget.dart';
 
-class MovieScreen extends ConsumerWidget {
+class MovieScreen extends StatelessWidget {
   const MovieScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final themeState = ref.watch(themeProvider.notifier);
+  Widget build(BuildContext context,) {
+    // final themeState = ref.watch(themeProvider.notifier);
 
     return  Scaffold(
       appBar: AppBar(
@@ -31,15 +31,26 @@ class MovieScreen extends ConsumerWidget {
               color: Colors.red,
             ),
           ),
-            IconButton(
-            onPressed: () async {
-                await ref.read(themeProvider.notifier).toggleTheme();
-             },
-            icon:  Icon(
-              themeState == ThemeEnums.dark ?  MyAppIcons.darkMode : MyAppIcons.lightMode,
+          Consumer(builder: (context, ref, child) {
+            final themeState = ref.watch(themeProvider);
+            return IconButton(
+              onPressed: () async {},
+              icon: Icon(
+                themeState == ThemeEnums.dark ? MyAppIcons.darkMode : MyAppIcons.lightMode,
+              ),
+            
+            );
+          }   ),
 
-            ),
-          ),
+          //   IconButton(
+          //   onPressed: () async {
+          //       await ref.read(themeProvider.notifier).toggleTheme();
+          //    },
+          //   icon:  Icon(
+          //     themeState == ThemeEnums.dark ?  MyAppIcons.darkMode : MyAppIcons.lightMode,
+
+          //   ),
+          // ),
         ],
       ),
       body: ListView.builder(
