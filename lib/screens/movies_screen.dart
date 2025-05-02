@@ -1,21 +1,21 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mvvm_statemanagements/constants/my_app_icons.dart';
-import 'package:mvvm_statemanagements/models/movies_genre.dart';
-import 'package:mvvm_statemanagements/models/movies_model.dart';
-import 'package:mvvm_statemanagements/repository/movies_repo.dart';
+import 'package:mvvm_statemanagements/enums/theme_enums.dart';
 import 'package:mvvm_statemanagements/screens/favorite_screen.dart';
 
 import 'package:mvvm_statemanagements/service/init_getit.dart';
 import 'package:mvvm_statemanagements/service/navigation_service.dart';
+import 'package:mvvm_statemanagements/viewmodel/theme_provider.dart';
 import 'package:mvvm_statemanagements/widgets/movies/movies_widget.dart';
 
-class MovieScreen extends StatelessWidget {
+class MovieScreen extends ConsumerWidget {
   const MovieScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeState = ref.watch(themeProvider.notifier);
+
     return  Scaffold(
       appBar: AppBar(
         title: const Text("Popular Movies",),
@@ -33,18 +33,16 @@ class MovieScreen extends StatelessWidget {
           ),
             IconButton(
             onPressed: () async {
-                 final List<MovieGenre> genres = await getIt<MoviesRepository>().fetchGenres();
-              log("Genres are $genres");
+                await ref.read(themeProvider.notifier).toggleTheme();
              },
-            icon: const Icon(
-                MyAppIcons.darkMode,
+            icon:  Icon(
+              themeState == ThemeEnums.dark ?  MyAppIcons.darkMode : MyAppIcons.lightMode,
+
             ),
           ),
-        // Text(movieName),
         ],
       ),
       body: ListView.builder(
-       
         itemCount: 10,
         itemBuilder: (context, index) {
             return  MoviesWidget(
