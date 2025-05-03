@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mvvm_statemanagements/constants/theme_data.dart';
 import 'package:mvvm_statemanagements/enums/theme_enums.dart';
 import 'package:mvvm_statemanagements/screens/movies_screen.dart';
+import 'package:mvvm_statemanagements/screens/splash_screen.dart';
 import 'package:mvvm_statemanagements/service/init_getit.dart';
 import 'package:mvvm_statemanagements/service/navigation_service.dart';
 import 'package:mvvm_statemanagements/viewmodel/theme_provider.dart';
@@ -41,7 +42,7 @@ class MyApp extends ConsumerWidget {
       navigatorKey: getIt<NavigationService>().navigatorKey,
       title: 'Movies App',
       theme: themeState == ThemeEnums.dark ? MyThemeData.darkTheme : MyThemeData.lightTheme,
-      home: const MovieScreen(),
+      home: const SplashScreen(),
     );
   }
 }
